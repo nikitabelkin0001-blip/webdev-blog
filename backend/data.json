@@ -1,0 +1,90 @@
+{
+  "tags": [
+    {
+      "id": "064f143c-f112-49a7-86c7-1e0ffb20881d",
+      "name": "JavaScript",
+      "slug": "javascript",
+      "description": "Язык программирования для веба",
+      "createdAt": "2026-05-29T17:33:04.105Z"
+    },
+    {
+      "id": "14e95f60-814a-4be3-adb7-57c1a4f6bd7d",
+      "name": "TypeScript",
+      "slug": "typescript",
+      "description": "Типизированный JavaScript",
+      "createdAt": "2026-05-29T17:33:04.105Z"
+    },
+    {
+      "id": "8d2b2938-e1bf-42f8-9981-ee89209aa5ca",
+      "name": "Next.js",
+      "slug": "nextjs",
+      "description": "React-фреймворк",
+      "createdAt": "2026-05-29T17:33:04.105Z"
+    },
+    {
+      "id": "b62c65c6-8bc8-4f6b-8f7f-f2c2347a33e8",
+      "name": "Tailwind CSS",
+      "slug": "tailwind",
+      "description": "Утилитарный CSS",
+      "createdAt": "2026-05-29T17:33:04.105Z"
+    },
+    {
+      "id": "5fc12c13-e655-4c1b-a6f5-f9dba42c0232",
+      "name": "Node.js",
+      "slug": "nodejs",
+      "description": "Серверный JavaScript",
+      "createdAt": "2026-05-29T17:33:04.105Z"
+    }
+  ],
+  "posts": [
+    {
+      "id": "f3cd6f4d-a45f-4f1b-b554-5d1124c3e0dd",
+      "title": "Введение в JavaScript",
+      "content": "JavaScript — это язык программирования, который работает в браузере и на сервере. Он позволяет создавать интерактивные веб-страницы.",
+      "isPublished": true,
+      "publishedAt": "2026-05-29T17:33:04.105Z",
+      "tagId": "064f143c-f112-49a7-86c7-1e0ffb20881d",
+      "createdAt": "2026-05-29T17:33:04.105Z",
+      "updatedAt": "2026-05-29T17:33:04.105Z"
+    },
+    {
+      "id": "0ef1a867-b7f4-4300-9afe-d844e4afcd0b",
+      "title": "Почему TypeScript лучше JavaScript",
+      "content": "TypeScript добавляет статическую типизацию, что помогает ловить ошибки на этапе разработки, а не в рантайме.",
+      "isPublished": true,
+      "publishedAt": "2026-05-29T17:33:04.105Z",
+      "tagId": "14e95f60-814a-4be3-adb7-57c1a4f6bd7d",
+      "createdAt": "2026-05-29T17:33:04.105Z",
+      "updatedAt": "2026-05-29T17:33:04.105Z"
+    },
+    {
+      "id": "65a13d52-1437-44cc-9f00-73c1ea6bd212",
+      "title": "Next.js 14: Что нового",
+      "content": "App Router, Server Components, улучшенная производительность и новый рендеринг.",
+      "isPublished": false,
+      "tagId": "8d2b2938-e1bf-42f8-9981-ee89209aa5ca",
+      "createdAt": "2026-05-29T17:33:04.105Z",
+      "updatedAt": "2026-05-29T17:33:04.105Z"
+    },
+    {
+      "id": "391e1d6b-ac49-4098-8bb5-f0c6efcbf100",
+      "title": "Tailwind CSS за 10 минут",
+      "content": "Утилитарные классы позволяют верстать без отрыва от HTML и без написания CSS-файлов.",
+      "isPublished": true,
+      "publishedAt": "2026-05-29T17:33:04.105Z",
+      "tagId": "b62c65c6-8bc8-4f6b-8f7f-f2c2347a33e8",
+      "createdAt": "2026-05-29T17:33:04.105Z",
+      "updatedAt": "2026-05-29T17:33:04.105Z"
+    },
+    {
+      "id": "72bf4a14-31a4-460e-a2e4-92d28dee84c7",
+      "title": "Создаём API на Express",
+      "content": "Express — минималистичный веб-фреймворк для Node.js. Позволяет быстро создать REST API.",
+      "isPublished": true,
+      "publishedAt": "2026-05-29T17:33:04.105Z",
+      "tagId": "5fc12c13-e655-4c1b-a6f5-f9dba42c0232",
+      "createdAt": "2026-05-29T17:33:04.105Z",
+      "updatedAt": "2026-05-29T17:33:04.105Z"
+    }
+  ]
+}

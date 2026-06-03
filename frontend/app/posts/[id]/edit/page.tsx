@@ -1,19 +1,21 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { postsApi, tagsApi } from '@/lib/api';
-import { Tag } from '@/types';
+import { PostWithTag, Tag } from '@/types';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Textarea from '@/components/Textarea';
 import Select from '@/components/Select';
 
-export default function NewPostPage() {
+export default function EditPostPage() {
+  const { id } = useParams();
   const router = useRouter();
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState('');
   const [form, setForm] = useState({
     title: '',
@@ -23,10 +25,25 @@ export default function NewPostPage() {
   });
 
   useEffect(() => {
-    tagsApi.getAll(1, 100)
-      .then(res => setTags(res.items))
-      .catch(() => setError('Ошибка загрузки тегов'));
-  }, []);
+    Promise.all([
+      postsApi.getById(id as string),
+      tagsApi.getAll(1, 100)
+    ])
+      .then(([post, tagsRes]) => {
+        setForm({
+          title: post.title,
+          content: post.content,
+          isPublished: post.isPublished,
+          tagId: post.tagId,
+        });
+        setTags(tagsRes.items);
+        setInitialLoading(false);
+      })
+      .catch(() => {
+        setError('Пост не найден');
+        setInitialLoading(false);
+      });
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,10 +65,15 @@ export default function NewPostPage() {
     setError('');
     
     try {
-      await postsApi.create(form);
-      router.push('/posts');
+      await postsApi.update(id as string, {
+        title: form.title,
+        content: form.content,
+        isPublished: form.isPublished,
+        tagId: form.tagId,
+      });
+      router.push(`/posts/${id}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ошибка создания поста');
+      setError(err instanceof Error ? err.message : 'Ошибка обновления');
     } finally {
       setLoading(false);
     }
@@ -62,15 +84,19 @@ export default function NewPostPage() {
     label: tag.name,
   }));
 
+  if (initialLoading) {
+    return <div className="text-center py-10">Загрузка...</div>;
+  }
+
   return (
     <div className="container mx-auto max-w-2xl p-4">
       <div className="mb-4">
-        <Link href="/posts" className="text-blue-600 hover:underline">
-          ← Назад к постам
+        <Link href={`/posts/${id}`} className="text-blue-600 hover:underline">
+          ← Назад к посту
         </Link>
       </div>
       
-      <h1 className="text-2xl font-bold mb-6">➕ Создание нового поста</h1>
+      <h1 className="text-2xl font-bold mb-6">✏️ Редактирование поста</h1>
       
       {error && (
         <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
@@ -85,7 +111,6 @@ export default function NewPostPage() {
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
           required
-          placeholder="Введите заголовок поста"
         />
         
         <Select
@@ -104,7 +129,6 @@ export default function NewPostPage() {
           onChange={(e) => setForm({ ...form, content: e.target.value })}
           required
           rows={8}
-          placeholder="Введите текст поста..."
         />
         
         <div className="mb-4">
@@ -116,16 +140,16 @@ export default function NewPostPage() {
               className="w-4 h-4"
             />
             <span className="text-sm text-gray-700">
-              Опубликовать сразу (если не отметить, пост будет черновиком)
+              Опубликован
             </span>
           </label>
         </div>
         
         <div className="flex gap-3">
           <Button type="submit" variant="primary" disabled={loading}>
-            {loading ? 'Сохранение...' : '📝 Создать пост'}
+            {loading ? 'Сохранение...' : '💾 Сохранить изменения'}
           </Button>
-          <Link href="/posts">
+          <Link href={`/posts/${id}`}>
             <Button type="button" variant="secondary">
               Отмена
             </Button>

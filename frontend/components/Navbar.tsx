@@ -18,11 +18,13 @@ export default function Navbar() {
         <div className="flex flex-row justify-between items-center">
           <Link href="/" className="flex items-center hover:opacity-80 transition">
             <Image 
-              src="/logo.png" 
+              src="/logotip.png" 
               alt="Логотип" 
-              width={120} 
-              height={120} 
+              width={90} 
+              height={90} 
               className="object-contain"
+              loading="eager"
+              priority
             />
           </Link>
 

@@ -2,14 +2,29 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { postsApi } from '@/lib/api';
+import { postsApi, tagsApi } from '@/lib/api';
 import { PostWithTag } from '@/types';
 
 export default function Home() {
   const [latestPosts, setLatestPosts] = useState<PostWithTag[]>([]);
   const [loading, setLoading] = useState(true);
+  const [tagsCount, setTagsCount] = useState(0);
+  const [postsCount, setPostsCount] = useState(0);
 
   useEffect(() => {
+    // количество тегов и постов
+    Promise.all([
+      tagsApi.getAll(1, 100),
+      postsApi.getAll({ page: 1, limit: 100 })
+    ]).then(([tagsRes, postsRes]) => {
+      setTagsCount(tagsRes.total);
+      setPostsCount(postsRes.total);
+    }).catch(() => {
+      setTagsCount(0);
+      setPostsCount(0);
+    });
+
+    // последние три публикации 
     postsApi.getAll({ page: 1, limit: 10 }).then(res => {
       const publishedPosts = res.items.filter(post => post.isPublished);
       const sortedPosts = [...publishedPosts].sort((a, b) => 
@@ -79,6 +94,21 @@ export default function Home() {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="bg-gray-100 py-12 mt-8">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-2xl mx-auto">
+            <div className="bg-white rounded-lg p-8 shadow-md">
+              <div className="text-5xl font-bold text-blue-600">{tagsCount}</div>
+              <div className="text-gray-600 mt-2 text-lg">Тегов</div>
+            </div>
+            <div className="bg-white rounded-lg p-8 shadow-md">
+              <div className="text-5xl font-bold text-blue-600">{postsCount}</div>
+              <div className="text-gray-600 mt-2 text-lg">Постов</div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );

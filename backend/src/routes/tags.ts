@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const tags = await prisma.tag.findMany({
-      orderBy: { createdAt: 'desc' }  // Сортируем: новые теги сверху
+      orderBy: { createdAt: 'desc' }
     });
 
     res.json({
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
   try {
     const tag = await prisma.tag.findUnique({
       where: { id: req.params.id },
-      include: { posts: true }  // Включаем посты этого тега
+      include: { posts: true }
     });
     
     if (!tag) {

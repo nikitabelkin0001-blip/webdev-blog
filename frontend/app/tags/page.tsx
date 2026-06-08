@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { tagsApi } from '@/lib/api';
 import { Tag } from '@/types';
+import Button from '@/components/Button';
 
 export default function TagsPage() {
   const [tags, setTags] = useState<Tag[]>([]);
@@ -12,22 +13,17 @@ export default function TagsPage() {
 
   useEffect(() => {
     tagsApi.getAll(1, 100)
-      .then(res => {
-        setTags(res.items);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError('Ошибка загрузки тегов');
-        setLoading(false);
-      });
+      .then(res => setTags(res.items))
+      .catch(() => setError('Ошибка загрузки тегов'))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Вы уверены, что хотите удалить тег "${name}"?`)) return;
+    if (!confirm(`Удалить тег "${name}"? Посты с этим тегом останутся без тега.`)) return;
     
     try {
       await tagsApi.delete(id);
-      setTags(tags.filter(tag => tag.id !== id));
+      setTags(tags.filter(t => t.id !== id));
     } catch {
       alert('Ошибка при удалении тега');
     }
@@ -42,9 +38,7 @@ export default function TagsPage() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">🏷️ Все теги</h1>
         <Link href="/tags/new">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-            + Новый тег
-          </button>
+          <Button variant="primary">+ Новый тег</Button>
         </Link>
       </div>
 
@@ -61,36 +55,32 @@ export default function TagsPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {tags.map((tag) => (
-            <div key={tag.id} className="border border-gray-200 rounded-lg p-5 bg-white hover:shadow-md transition">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <Link href={`/tags/${tag.id}`}>
-                    <h2 className="text-xl font-semibold text-blue-600 hover:underline">
-                      {tag.name}
-                    </h2>
-                  </Link>
+            <div key={tag.id} className="border border-gray-200 rounded-lg bg-white hover:shadow-md transition group">
+              <Link href={`/tags/${tag.id}`}>
+                <div className="p-4 cursor-pointer">
+                  <h2 className="text-xl font-semibold text-blue-600 hover:underline mb-2">
+                    {tag.name}
+                  </h2>
                   {tag.description && (
-                    <p className="text-gray-600 text-sm mt-1 line-clamp-2">
+                    <p className="text-gray-600 text-sm mb-2 line-clamp-2">
                       {tag.description}
                     </p>
                   )}
-                  <p className="text-gray-400 text-xs mt-2 font-mono">
-                    /{tag.slug}
-                  </p>
+                  <p className="text-gray-400 text-xs font-mono">/{tag.slug}</p>
                 </div>
-                <div className="flex gap-2 ml-4">
-                  <Link href={`/tags/${tag.id}/edit`}>
-                    <button className="text-yellow-600 hover:text-yellow-800 p-1">
-                      ✏️
-                    </button>
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(tag.id, tag.name)}
-                    className="text-red-600 hover:text-red-800 p-1"
-                  >
-                    🗑️
+              </Link>
+              <div className="border-t flex justify-end gap-2 p-2 bg-gray-50 rounded-b-lg">
+                <Link href={`/tags/${tag.id}/edit`}>
+                  <button className="text-yellow-600 hover:text-yellow-800 text-sm px-2 py-1 rounded">
+                    ✏️ Редактировать
                   </button>
-                </div>
+                </Link>
+                <button
+                  onClick={() => handleDelete(tag.id, tag.name)}
+                  className="text-red-600 hover:text-red-800 text-sm px-2 py-1 rounded"
+                >
+                  🗑️ Удалить
+                </button>
               </div>
             </div>
           ))}

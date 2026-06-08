@@ -12,7 +12,7 @@ export default function Home() {
   const [postsCount, setPostsCount] = useState(0);
 
   useEffect(() => {
-    // количество тегов и постов
+    // Количество тегов и постов
     Promise.all([
       tagsApi.getAll(1, 100),
       postsApi.getAll({ page: 1, limit: 100 })
@@ -24,7 +24,7 @@ export default function Home() {
       setPostsCount(0);
     });
 
-    // последние три публикации 
+    // Последние 3 поста
     postsApi.getAll({ page: 1, limit: 10 }).then(res => {
       const publishedPosts = res.items.filter(post => post.isPublished);
       const sortedPosts = [...publishedPosts].sort((a, b) => 
@@ -65,27 +65,37 @@ export default function Home() {
         </div>
 
         {latestPosts.length === 0 ? (
-          <div className="text-center py-10 text-gray-500">
-            Постов пока нет
+          <div className="text-center py-10 text-gray-500 border-2 border-dashed rounded-lg">
+            Постов пока нет. Создайте первый пост!
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {latestPosts.map((post) => (
               <Link key={post.id} href={`/posts/${post.id}`}>
                 <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition cursor-pointer border border-gray-100 h-full flex flex-col">
-                  <div className="p-5">
+                  <div className="p-5 flex flex-col flex-grow">
                     <div className="mb-2">
                       <span className="text-xs text-blue-600 font-medium bg-blue-50 px-2 py-1 rounded">
                         {post.tag?.name || 'Без тега'}
                       </span>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2 line-clamp-2">
+                    
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600">
                       {post.title}
                     </h3>
-                    <p className="text-gray-600 text-sm line-clamp-3">
-                      {post.content.substring(0, 150)}...
+                    
+                    <div className="flex items-center gap-2 text-xs text-gray-400 mb-3">
+                      <span>📅</span>
+                      <span>{new Date(post.createdAt).toLocaleDateString('ru-RU')}</span>
+                      <span>•</span>
+                      <span>{post.isPublished ? '✅ Опубликован' : '📝 Черновик'}</span>
+                    </div>
+                    
+                    <p className="text-gray-600 text-sm line-clamp-3 flex-grow">
+                      {post.content.length > 150 ? `${post.content.substring(0, 150)}...` : post.content}
                     </p>
-                    <div className="mt-4 text-blue-500 text-sm font-medium">
+                    
+                    <div className="mt-4 text-blue-500 text-sm font-medium hover:text-blue-700">
                       Читать далее →
                     </div>
                   </div>
@@ -99,11 +109,11 @@ export default function Home() {
       <section className="bg-gray-100 py-12 mt-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-2xl mx-auto">
-            <div className="bg-white rounded-lg p-8 shadow-md">
+            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition">
               <div className="text-5xl font-bold text-blue-600">{tagsCount}</div>
               <div className="text-gray-600 mt-2 text-lg">Тегов</div>
             </div>
-            <div className="bg-white rounded-lg p-8 shadow-md">
+            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition">
               <div className="text-5xl font-bold text-blue-600">{postsCount}</div>
               <div className="text-gray-600 mt-2 text-lg">Постов</div>
             </div>

@@ -22,7 +22,7 @@ export default function Navbar() {
               alt="Логотип" 
               width={90} 
               height={90} 
-              className="object-contain"
+              className="object-contain w-auto h-auto"
               loading="eager"
               priority
             />

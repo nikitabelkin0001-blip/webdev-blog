@@ -1,0 +1,8 @@
+{
+  "experimentalServices": [
+    {
+      "name": "frontend",
+      "root": "frontend"
+    }
+  ]
+}

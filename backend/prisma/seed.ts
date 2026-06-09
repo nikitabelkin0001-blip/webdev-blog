@@ -1,9 +1,13 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
 async function main() {
   console.log('Начинаем заполнение базы данных...');
+
+  // Хешируем пароль
+  const hashedPassword = await bcrypt.hash('123456', 10);
 
   // создаём пользователя
   const user = await prisma.user.upsert({
@@ -12,7 +16,7 @@ async function main() {
     create: {
       id: 'user_1',
       email: 'admin@gmail.com',
-      password: '123456',
+      password: hashedPassword,  // ← изменено
       name: 'Администратор',
     },
   });

@@ -5,8 +5,11 @@ import Link from 'next/link';
 import { postsApi, tagsApi } from '@/lib/api';
 import { PostWithTag, Tag } from '@/types';
 import Button from '@/components/Button';
+import { useAuth } from '@/context/AuthContext'; // импорт для проверки автора
 
 export default function PostsPage() {
+  const { user } = useAuth(); // текущий залогиненный пользователь
+
   const [posts, setPosts] = useState<PostWithTag[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
@@ -138,19 +141,22 @@ export default function PostsPage() {
                   </div>
                 </Link>
                 
-                <div className="border-t flex justify-end gap-2 p-2 bg-gray-50 rounded-b-lg">
-                  <Link href={`/posts/${post.id}/edit`}>
-                    <button className="text-yellow-600 hover:text-yellow-800 text-sm px-2 py-1 rounded">
-                      ✏️ Редактировать
+                {/* 🔐 Показываем кнопки только автору поста */}
+                {user && user.id === post.authorId && (
+                  <div className="border-t flex justify-end gap-2 p-2 bg-gray-50 rounded-b-lg">
+                    <Link href={`/posts/${post.id}/edit`}>
+                      <button className="text-yellow-600 hover:text-yellow-800 text-sm px-2 py-1 rounded">
+                        ✏️ Редактировать
+                      </button>
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(post.id, post.title)}
+                      className="text-red-600 hover:text-red-800 text-sm px-2 py-1 rounded"
+                    >
+                      🗑️ Удалить
                     </button>
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(post.id, post.title)}
-                    className="text-red-600 hover:text-red-800 text-sm px-2 py-1 rounded"
-                  >
-                    🗑️ Удалить
-                  </button>
-                </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>

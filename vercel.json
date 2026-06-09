@@ -1,8 +1,14 @@
 {
-  "experimentalServices": [
+  "services": [
     {
       "name": "frontend",
-      "root": "frontend"
+      "root": "frontend",
+      "framework": "nextjs"
+    },
+    {
+      "name": "backend",
+      "root": "backend",
+      "framework": "nodejs"
     }
   ]
 }

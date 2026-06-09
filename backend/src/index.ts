@@ -1,22 +1,44 @@
 import express from 'express';
 import cors from 'cors';
-import tagRoutes from './routes/tags';
-import postRoutes from './routes/posts';
-import authRoutes from './routes/auth';
+import tagsRouter from './routes/tags';
+import postsRouter from './routes/posts';
+import authRouter from './routes/auth';
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://webdev-blog.vercel.app',
+  'https://webdev-blog-2z6k.vercel.app'
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 app.use(express.json());
 
-app.use('/api/tags', tagRoutes);
-app.use('/api/posts', postRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/tags', tagsRouter);
+app.use('/api/posts', postsRouter);
+app.use('/api/auth', authRouter);
+
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Backend is running!',
+    status: 'ok',
+    endpoints: ['/api/tags', '/api/posts', '/api/auth']
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 app.listen(PORT, () => {
   console.log(`✅ Backend running on http://localhost:${PORT}`);
-  console.log(`📋 Теги: http://localhost:${PORT}/api/tags`);
-  console.log(`📝 Посты: http://localhost:${PORT}/api/posts`);
-  console.log(`🔐 Авторизация: http://localhost:${PORT}/api/auth`);
+  console.log(`📌 Tags: http://localhost:${PORT}/api/tags`);
+  console.log(`📌 Posts: http://localhost:${PORT}/api/posts`);
+  console.log(`📌 Auth: http://localhost:${PORT}/api/auth`);
 });

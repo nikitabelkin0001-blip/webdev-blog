@@ -224,3 +224,46 @@ Tag-PostTag    один ко многим
 Post-Tag     многие ко многим
 
 
+скриншоты:
+Шапка:
+![Шапка](frontend/public/screenshots/header.png)
+
+Подвал:
+![Подвал](frontend/public/screenshots/footer.png)
+
+Главная страница:
+![главная](frontend/public/screenshots/home.png)
+
+Страница с постами:
+![Посты](frontend/public/screenshots/pagePosts.png)
+
+Создание поста:
+![новыйПост](frontend/public/screenshots/newPost.png)
+
+Просмотр поста:
+![пост](frontend/public/screenshots/post.png)
+
+Редактирование поста:
+![редактированиеПоста](frontend/public/screenshots/editPost.png)
+
+Удаление поста:
+![удаление](frontend/public/screenshots/delPost.png)
+тег удаляется также
+
+Страница тегов:
+![Теги](frontend/public/screenshots/pageTags.png)
+
+Просмотр тега:
+![тег](frontend/public/screenshots/tag.png)
+
+Редактирование тега:
+![РедактированиеТега](frontend/public/screenshots/editTag.png)
+
+Создание тега:
+![созданиеТега](frontend/public/screenshots/newTag.png)
+
+Авторизация:
+![Авторизация](frontend/public/screenshots/autorise.png)
+
+Регистрация:
+![Регистрация](frontend/public/screenshots/registr.png)

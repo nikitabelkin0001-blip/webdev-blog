@@ -36,7 +36,7 @@ export default function TagsPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">🏷️ Все теги</h1>
+        <h1 className="text-3xl font-bold">Все теги</h1>
         <Link href="/tags/new">
           <Button variant="primary">+ Новый тег</Button>
         </Link>
@@ -72,14 +72,14 @@ export default function TagsPage() {
               <div className="border-t flex justify-end gap-2 p-2 bg-gray-50 rounded-b-lg">
                 <Link href={`/tags/${tag.id}/edit`}>
                   <button className="text-yellow-600 hover:text-yellow-800 text-sm px-2 py-1 rounded">
-                    ✏️ Редактировать
+                    Редактировать
                   </button>
                 </Link>
                 <button
                   onClick={() => handleDelete(tag.id, tag.name)}
                   className="text-red-600 hover:text-red-800 text-sm px-2 py-1 rounded"
                 >
-                  🗑️ Удалить
+                  Удалить
                 </button>
               </div>
             </div>

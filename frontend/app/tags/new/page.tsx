@@ -52,11 +52,11 @@ export default function NewTagPage() {
     <div className="container mx-auto max-w-2xl p-4">
       <div className="mb-4">
         <Link href="/tags" className="text-blue-600 hover:underline">
-          ← Назад к тегам
+          Назад к тегам
         </Link>
       </div>
       
-      <h1 className="text-2xl font-bold mb-6">➕ Новый тег</h1>
+      <h1 className="text-2xl font-bold mb-6">Новый тег</h1>
       
       {error && (
         <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
@@ -118,7 +118,7 @@ export default function NewTagPage() {
         
         <div className="flex gap-3">
           <Button type="submit" variant="primary" disabled={loading}>
-            {loading ? 'Создание...' : '➕ Создать тег'}
+            {loading ? 'Создание...' : 'Создать тег'}
           </Button>
           <Link href="/tags">
             <Button type="button" variant="secondary">

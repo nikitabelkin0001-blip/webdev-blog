@@ -1,5 +1,6 @@
 import express from 'express';
 import prisma from '../db/prisma';
+import { authenticate, AuthRequest } from '../middleware/auth';
 
 const router = express.Router();
 
@@ -65,7 +66,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authenticate, async (req: AuthRequest, res) => {
   try {
     const { title, content, isPublished, tagId } = req.body;
     
@@ -81,8 +82,6 @@ router.post('/', async (req, res) => {
       return res.status(422).json({ error: 'Указанный тег не существует' });
     }
     
-    const authorId = "user_1";
-    
     const newPost = await prisma.post.create({
       data: {
         title,
@@ -90,7 +89,7 @@ router.post('/', async (req, res) => {
         isPublished,
         publishedAt: isPublished ? new Date() : null,
         tagId,
-        authorId
+        authorId: req.userId!
       }
     });
     
@@ -101,7 +100,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authenticate, async (req: AuthRequest, res) => {
   try {
     const { title, content, isPublished, tagId } = req.body;
     
@@ -112,6 +111,11 @@ router.patch('/:id', async (req, res) => {
     if (!existingPost) {
       return res.status(404).json({ error: 'Пост не найден' });
     }
+    
+    const isAdmin = req.userId === 'user_1';
+if (existingPost.authorId !== req.userId && !isAdmin) {
+  return res.status(403).json({ error: 'Вы не можете редактировать чужой пост' });
+}
     
     if (tagId) {
       const tagExists = await prisma.tag.findUnique({
@@ -141,7 +145,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticate, async (req: AuthRequest, res) => {
   try {
     const existingPost = await prisma.post.findUnique({
       where: { id: req.params.id }
@@ -150,6 +154,11 @@ router.delete('/:id', async (req, res) => {
     if (!existingPost) {
       return res.status(404).json({ error: 'Пост не найден' });
     }
+    
+    const isAdmin = req.userId === 'user_1';
+if (existingPost.authorId !== req.userId && !isAdmin) {
+  return res.status(403).json({ error: 'Вы не можете удалить чужой пост' });
+}
     
     await prisma.post.delete({
       where: { id: req.params.id }

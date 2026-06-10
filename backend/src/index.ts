@@ -37,8 +37,8 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Backend running on http://localhost:${PORT}`);
-  console.log(`📌 Tags: http://localhost:${PORT}/api/tags`);
-  console.log(`📌 Posts: http://localhost:${PORT}/api/posts`);
-  console.log(`📌 Auth: http://localhost:${PORT}/api/auth`);
+  console.log(`Backend running on http://localhost:${PORT}`);
+  console.log(`Tags: http://localhost:${PORT}/api/tags`);
+  console.log(`Posts: http://localhost:${PORT}/api/posts`);
+  console.log(`Auth: http://localhost:${PORT}/api/auth`);
 });

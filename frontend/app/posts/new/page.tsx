@@ -66,11 +66,11 @@ export default function NewPostPage() {
     <div className="container mx-auto max-w-2xl p-4">
       <div className="mb-4">
         <Link href="/posts" className="text-blue-600 hover:underline">
-          ← Назад к постам
+          Назад к постам
         </Link>
       </div>
       
-      <h1 className="text-2xl font-bold mb-6">➕ Создание нового поста</h1>
+      <h1 className="text-2xl font-bold mb-6">Создание нового поста</h1>
       
       {error && (
         <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
@@ -123,7 +123,7 @@ export default function NewPostPage() {
         
         <div className="flex gap-3">
           <Button type="submit" variant="primary" disabled={loading}>
-            {loading ? 'Сохранение...' : '📝 Создать пост'}
+            {loading ? 'Сохранение...' : 'Создать пост'}
           </Button>
           <Link href="/posts">
             <Button type="button" variant="secondary">

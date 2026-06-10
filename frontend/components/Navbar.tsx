@@ -39,7 +39,7 @@ export default function Navbar() {
                   : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
               }`}
             >
-              🏠 Главная
+              Главная
             </Link>
             <Link
               href="/posts"
@@ -49,7 +49,7 @@ export default function Navbar() {
                   : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
               }`}
             >
-              📄 Посты
+              Посты
             </Link>
             <Link
               href="/tags"
@@ -59,12 +59,12 @@ export default function Navbar() {
                   : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
               }`}
             >
-              🏷️ Теги
+              Теги
             </Link>
             
             {user ? (
               <div className="flex items-center gap-2 ml-4">
-                <span className="text-sm text-gray-600">👤 {user.name}</span>
+                <span className="text-sm text-gray-600">{user.name}</span>
                 <button
                   onClick={logout}
                   className="px-3 py-1.5 rounded-lg transition text-sm bg-red-500 text-white hover:bg-red-600"

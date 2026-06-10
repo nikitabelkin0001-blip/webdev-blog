@@ -92,11 +92,11 @@ export default function EditPostPage() {
     <div className="container mx-auto max-w-2xl p-4">
       <div className="mb-4">
         <Link href={`/posts/${id}`} className="text-blue-600 hover:underline">
-          ← Назад к посту
+          Назад к посту
         </Link>
       </div>
       
-      <h1 className="text-2xl font-bold mb-6">✏️ Редактирование поста</h1>
+      <h1 className="text-2xl font-bold mb-6">Редактирование поста</h1>
       
       {error && (
         <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
@@ -147,7 +147,7 @@ export default function EditPostPage() {
         
         <div className="flex gap-3">
           <Button type="submit" variant="primary" disabled={loading}>
-            {loading ? 'Сохранение...' : '💾 Сохранить изменения'}
+            {loading ? 'Сохранение...' : 'Сохранить изменения'}
           </Button>
           <Link href={`/posts/${id}`}>
             <Button type="button" variant="secondary">

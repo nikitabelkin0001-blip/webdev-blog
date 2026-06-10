@@ -75,11 +75,11 @@ export default function EditTagPage() {
     <div className="container mx-auto max-w-2xl p-4">
       <div className="mb-4">
         <Link href={`/tags/${id}`} className="text-blue-600 hover:underline">
-          ← Назад к тегу
+          Назад к тегу
         </Link>
       </div>
       
-      <h1 className="text-2xl font-bold mb-6">✏️ Редактирование тега</h1>
+      <h1 className="text-2xl font-bold mb-6">Редактирование тега</h1>
       
       {error && (
         <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
@@ -135,7 +135,7 @@ export default function EditTagPage() {
         
         <div className="flex gap-3">
           <Button type="submit" variant="primary" disabled={loading}>
-            {loading ? 'Сохранение...' : '💾 Сохранить'}
+            {loading ? 'Сохранение...' : 'Сохранить'}
           </Button>
           <Link href={`/tags/${id}`}>
             <Button type="button" variant="secondary">

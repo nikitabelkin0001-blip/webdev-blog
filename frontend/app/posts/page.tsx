@@ -74,7 +74,7 @@ export default function PostsPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">📝 Все посты</h1>
+        <h1 className="text-3xl font-bold">Все посты</h1>
         <Link href="/posts/new">
           <Button variant="primary">+ Новый пост</Button>
         </Link>
@@ -89,7 +89,7 @@ export default function PostsPage() {
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <input
           type="text"
-          placeholder="🔍 Поиск по заголовку или содержанию..."
+          placeholder="Поиск по заголовку или содержанию..."
           value={searchQuery}
           onChange={handleSearchChange}
           className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -100,7 +100,7 @@ export default function PostsPage() {
           onChange={(e) => setSelectedTagId(e.target.value)}
           className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
         >
-          <option value="">🏷️ Все теги</option>
+          <option value="">Все теги</option>
           {tags.map(tag => (
             <option key={tag.id} value={tag.id}>{tag.name}</option>
           ))}
@@ -129,10 +129,10 @@ export default function PostsPage() {
                     </h2>
                     
                     <div className="flex items-center gap-2 text-xs text-gray-400 mb-3">
-                      <span>📅</span>
+                      <span></span>
                       <span>{new Date(post.createdAt).toLocaleDateString('ru-RU')}</span>
                       <span>•</span>
-                      <span>{post.isPublished ? '✅ Опубликован' : '📝 Черновик'}</span>
+                      <span>{post.isPublished ? 'Опубликован' : 'Черновик'}</span>
                     </div>
                     
                     <p className="text-gray-600 text-sm line-clamp-3">
@@ -141,19 +141,18 @@ export default function PostsPage() {
                   </div>
                 </Link>
                 
-                {/* 🔐 Показываем кнопки только автору поста */}
                 {user && user.id === post.authorId && (
                   <div className="border-t flex justify-end gap-2 p-2 bg-gray-50 rounded-b-lg">
                     <Link href={`/posts/${post.id}/edit`}>
                       <button className="text-yellow-600 hover:text-yellow-800 text-sm px-2 py-1 rounded">
-                        ✏️ Редактировать
+                        Редактировать
                       </button>
                     </Link>
                     <button
                       onClick={() => handleDelete(post.id, post.title)}
                       className="text-red-600 hover:text-red-800 text-sm px-2 py-1 rounded"
                     >
-                      🗑️ Удалить
+                      Удалить
                     </button>
                   </div>
                 )}
@@ -168,7 +167,7 @@ export default function PostsPage() {
                 disabled={page === 1}
                 className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
-                ← Назад
+                Назад
               </button>
               <span className="text-gray-600">
                 Страница {page} из {totalPages}
@@ -178,7 +177,7 @@ export default function PostsPage() {
                 disabled={page === totalPages}
                 className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
-                Далее →
+                Далее
               </button>
             </div>
           )}

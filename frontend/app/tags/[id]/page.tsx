@@ -46,7 +46,7 @@ export default function TagDetailPage() {
       <div className="text-center py-10">
         <p className="text-red-500">{error || 'Тег не найден'}</p>
         <Link href="/tags" className="text-blue-600 hover:underline mt-4 inline-block">
-          ← Вернуться к тегам
+          Вернуться к тегам
         </Link>
       </div>
     );
@@ -56,14 +56,14 @@ export default function TagDetailPage() {
     <div className="container mx-auto max-w-4xl p-4">
       <div className="flex justify-between items-center mb-6">
         <Link href="/tags" className="text-blue-600 hover:underline">
-          ← Назад к тегам
+          Назад к тегам
         </Link>
         <div className="flex gap-2">
           <Link href={`/tags/${id}/edit`}>
-            <Button variant="secondary">✏️ Редактировать</Button>
+            <Button variant="secondary">Редактировать</Button>
           </Link>
           <Button variant="danger" onClick={handleDelete} disabled={deleting}>
-            {deleting ? 'Удаление...' : '🗑️ Удалить'}
+            {deleting ? 'Удаление...' : 'Удалить'}
           </Button>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function TagDetailPage() {
                   {post.title}
                 </h3>
                 <p className="text-gray-500 text-sm mt-1">
-                  {post.isPublished ? '✅ Опубликован' : '📝 Черновик'}
+                  {post.isPublished ? 'Опубликован' : 'Черновик'}
                 </p>
                 <p className="text-gray-600 mt-2 line-clamp-2">
                   {post.content}

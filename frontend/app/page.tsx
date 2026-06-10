@@ -57,10 +57,10 @@ export default function Home() {
       <section className="container mx-auto px-4 py-12 max-w-5xl">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-bold text-gray-800">
-            📝 Последние посты
+            Последние посты
           </h2>
           <Link href="/posts" className="text-blue-600 hover:underline">
-            Все посты →
+            Все посты
           </Link>
         </div>
 
@@ -85,10 +85,10 @@ export default function Home() {
                     </h3>
                     
                     <div className="flex items-center gap-2 text-xs text-gray-400 mb-3">
-                      <span>📅</span>
+                      <span></span>
                       <span>{new Date(post.createdAt).toLocaleDateString('ru-RU')}</span>
                       <span>•</span>
-                      <span>{post.isPublished ? '✅ Опубликован' : '📝 Черновик'}</span>
+                      <span>{post.isPublished ? 'Опубликован' : 'Черновик'}</span>
                     </div>
                     
                     <p className="text-gray-600 text-sm line-clamp-3 flex-grow">
@@ -96,7 +96,7 @@ export default function Home() {
                     </p>
                     
                     <div className="mt-4 text-blue-500 text-sm font-medium hover:text-blue-700">
-                      Читать далее →
+                      Читать далее
                     </div>
                   </div>
                 </div>

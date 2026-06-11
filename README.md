@@ -46,7 +46,7 @@ cd webdev-blog
 Запуск бекенда:
 cd backend
 npm install
-cp .env.example .env   или создайте .env вручную
+copy .env.example .env   или создайте .env вручную
 npx prisma migrate dev --name init
 npx prisma db seed
 npm run dev

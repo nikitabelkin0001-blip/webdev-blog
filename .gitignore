@@ -1,0 +1,35 @@
+# Зависимости
+node_modules/
+.next/
+dist/
+
+# Переменные окружения
+.env
+.env.local
+.env.production
+
+# Логи
+*.log
+npm-debug.log*
+
+# База данных SQLite
+*.db
+*.db-journal
+dev.db
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Редакторы
+.vscode/
+.idea/
+
+# Временные файлы
+*.tmp
+*.temp
+
+# Сборки
+build/
+dist/

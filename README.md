@@ -1,4 +1,8 @@
 # webdev-blog
+
+Автор: Белкин Никита Евгеньевич
+Группа: ИСП-9.20
+
 practice
 
 Краткое описание:
@@ -42,6 +46,9 @@ cd webdev-blog
 Запуск бекенда:
 cd backend
 npm install
+cp .env.example .env   или создайте .env вручную
+npx prisma migrate dev --name init
+npx prisma db seed
 npm run dev
 
 запустится на http://localhost:4000
@@ -267,3 +274,12 @@ Post-Tag     многие ко многим
 
 Регистрация:
 ![Регистрация](frontend/public/screenshots/registr.png)
+
+
+
+Ошибка: Cannot find module './router'
+cd backend
+rmdir /s /q node_modules
+del package-lock.json
+npm install
+npm run dev

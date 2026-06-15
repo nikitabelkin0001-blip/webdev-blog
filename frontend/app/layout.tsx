@@ -23,7 +23,7 @@ export default function RootLayout({
           </main>
           <footer className="bg-gray-800 text-gray-400 py-6 mt-8">
             <div className="container mx-auto px-4 text-center text-sm">
-              <p>© 2026 WebDev Blog. Сделано на Next.js + Express + TypeScript</p>
+              <p>&copy; 2026 WebDev Blog. Сделано на Next.js + Express + TypeScript</p>
             </div>
           </footer>
         </AuthProvider>

@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { tagsApi } from '@/lib/api';
 import { TagWithPosts } from '@/types';
 import Button from '@/components/Button';
+import { useAuth } from '@/context/AuthContext';
 
 export default function TagDetailPage() {
+  const { user } = useAuth();
   const { id } = useParams();
   const router = useRouter();
   const [tag, setTag] = useState<TagWithPosts | null>(null);
@@ -17,7 +19,7 @@ export default function TagDetailPage() {
 
   useEffect(() => {
     if (!id) return;
-    
+
     tagsApi.getById(id as string)
       .then(setTag)
       .catch(() => setError('Тег не найден'))
@@ -26,7 +28,7 @@ export default function TagDetailPage() {
 
   const handleDelete = async () => {
     if (!confirm(`Удалить тег "${tag?.name}"? Посты с этим тегом останутся без тега.`)) return;
-    
+
     setDeleting(true);
     try {
       await tagsApi.delete(id as string);
@@ -58,14 +60,16 @@ export default function TagDetailPage() {
         <Link href="/tags" className="text-blue-600 hover:underline">
           Назад к тегам
         </Link>
-        <div className="flex gap-2">
-          <Link href={`/tags/${id}/edit`}>
-            <Button variant="secondary">Редактировать</Button>
-          </Link>
-          <Button variant="danger" onClick={handleDelete} disabled={deleting}>
-            {deleting ? 'Удаление...' : 'Удалить'}
-          </Button>
-        </div>
+        {user && (user.id === tag.authorId || user.id === 'user_1') && (
+          <div className="flex gap-2">
+            <Link href={`/tags/${id}/edit`}>
+              <Button variant="secondary">Редактировать</Button>
+            </Link>
+            <Button variant="danger" onClick={handleDelete} disabled={deleting}>
+              {deleting ? 'Удаление...' : 'Удалить'}
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className="bg-white rounded-lg border p-6 mb-8">

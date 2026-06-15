@@ -4,7 +4,12 @@ export interface Tag {
   slug: string;         // url-дружественное имя
   description?: string; // описание (необязательное)
   createdAt: string;    // дата создания
-}
+  authorId?: string;    // Автор тега
+  author?: {
+    id: string;
+    name: string;
+    email: string;
+  }
 
 export interface Post {
   id: string;           // уникальный идентификатор

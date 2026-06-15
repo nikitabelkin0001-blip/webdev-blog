@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { tagsApi } from '@/lib/api';
 import { Tag } from '@/types';
 import Button from '@/components/Button';
+import { useAuth } from '@/context/AuthContext';
 
 export default function TagsPage() {
+  const { user } = useAuth();
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -20,7 +22,7 @@ export default function TagsPage() {
 
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`Удалить тег "${name}"? Посты с этим тегом останутся без тега.`)) return;
-    
+
     try {
       await tagsApi.delete(id);
       setTags(tags.filter(t => t.id !== id));
@@ -53,7 +55,7 @@ export default function TagsPage() {
           Тегов пока нет. Создайте первый тег!
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {tags.map((tag) => (
             <div key={tag.id} className="border border-gray-200 rounded-lg bg-white hover:shadow-md transition group">
               <Link href={`/tags/${tag.id}`}>
@@ -69,19 +71,21 @@ export default function TagsPage() {
                   <p className="text-gray-400 text-xs font-mono">/{tag.slug}</p>
                 </div>
               </Link>
-              <div className="border-t flex justify-end gap-2 p-2 bg-gray-50 rounded-b-lg">
-                <Link href={`/tags/${tag.id}/edit`}>
-                  <button className="text-yellow-600 hover:text-yellow-800 text-sm px-2 py-1 rounded">
-                    Редактировать
+              {user && (user.id === tag.authorId || user.id === 'user_1') && (
+                <div className="border-t flex justify-end gap-2 p-2 bg-gray-50 rounded-b-lg">
+                  <Link href={`/tags/${tag.id}/edit`}>
+                    <button className="text-yellow-600 hover:text-yellow-800 text-sm px-2 py-1 rounded">
+                      Редактировать
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(tag.id, tag.name)}
+                    className="text-red-600 hover:text-red-800 text-sm px-2 py-1 rounded"
+                  >
+                    Удалить
                   </button>
-                </Link>
-                <button
-                  onClick={() => handleDelete(tag.id, tag.name)}
-                  className="text-red-600 hover:text-red-800 text-sm px-2 py-1 rounded"
-                >
-                  Удалить
-                </button>
-              </div>
+                </div>
+              )}
             </div>
           ))}
         </div>

@@ -24,11 +24,11 @@ async function main() {
 
   // Создаём теги
   const tagsData = [
-    { name: 'JavaScript', slug: 'javascript', description: 'Язык программирования для веба' },
-    { name: 'TypeScript', slug: 'typescript', description: 'Типизированный JavaScript' },
-    { name: 'Next.js', slug: 'nextjs', description: 'React-фреймворк' },
-    { name: 'Tailwind CSS', slug: 'tailwind', description: 'Утилитарный CSS' },
-    { name: 'Node.js', slug: 'nodejs', description: 'Серверный JavaScript' },
+    { name: 'JavaScript', slug: 'javascript', description: 'Язык программирования для веба', authorId: user.id },
+    { name: 'TypeScript', slug: 'typescript', description: 'Типизированный JavaScript', authorId: user.id },
+    { name: 'Next.js', slug: 'nextjs', description: 'React-фреймворк', authorId: user.id },
+    { name: 'Tailwind CSS', slug: 'tailwind', description: 'Утилитарный CSS', authorId: user.id },
+    { name: 'Node.js', slug: 'nodejs', description: 'Серверный JavaScript', authorId: user.id },
   ];
 
   for (const tag of tagsData) {

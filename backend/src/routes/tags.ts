@@ -1,6 +1,7 @@
 import express from 'express';
 import prisma from '../db/prisma';
 import crypto from 'crypto';
+import { authenticate, AuthRequest } from '../middleware/auth';
 
 const router = express.Router();
 
@@ -40,7 +41,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authenticate, async (req: AuthRequest, res) => {
   try {
     const { name, slug, description } = req.body;
     
@@ -66,7 +67,8 @@ router.post('/', async (req, res) => {
         name,
         slug,
         description: description || '',
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        authorId: req.userId!
       }
     });
     
@@ -77,7 +79,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authenticate, async (req: AuthRequest, res) => {
   try {
     const { name, slug, description } = req.body;
     
@@ -87,6 +89,11 @@ router.patch('/:id', async (req, res) => {
     
     if (!existingTag) {
       return res.status(404).json({ error: 'Тег не найден' });
+    }
+    
+    const isAdmin = req.userId === 'user_1';
+    if (existingTag.authorId !== req.userId && !isAdmin) {
+      return res.status(403).json({ error: 'Нет прав на редактирование тега' });
     }
     
     if (name && name !== existingTag.name) {
@@ -123,13 +130,26 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticate, async (req: AuthRequest, res) => {
   try {
-    const postsWithTag = await prisma.post.findMany({
+    const existingTag = await prisma.tag.findUnique({
+      where: { id: req.params.id }
+    });
+    
+    if (!existingTag) {
+      return res.status(404).json({ error: 'Тег не найден' });
+    }
+    
+    const isAdmin = req.userId === 'user_1';
+    if (existingTag.authorId !== req.userId && !isAdmin) {
+      return res.status(403).json({ error: 'Нет прав на удаление тега' });
+    }
+    
+    const postsWithTag = await prisma.post.count({
       where: { tagId: req.params.id }
     });
     
-    if (postsWithTag.length > 0) {
+    if (postsWithTag > 0) {
       return res.status(400).json({ error: 'Нельзя удалить тег, у которого есть посты' });
     }
     
@@ -143,5 +163,4 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 });
-
 export default router;

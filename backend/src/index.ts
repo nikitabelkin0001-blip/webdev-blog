@@ -7,15 +7,20 @@ import authRouter from './routes/auth';
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://web-dev-blog-mrmkuxy21-nikitabelkin0001-blips-projects.vercel.app',
-  'https://web-dev-blog-nine.vercel.app',
-  'https://web-dev-blog.vercel.app'
-];
-
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'https://web-dev-blog-mrmkuxy21-nikitabelkin0001-blips-projects.vercel.app',
+      'https://web-dev-blog-nine.vercel.app',
+      'https://web-dev-blog-2mn4a8m9x-nikitabelkin0001-blips-projects.vercel.app'
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 

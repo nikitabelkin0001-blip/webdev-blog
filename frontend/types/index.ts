@@ -19,6 +19,7 @@ export interface Post {
   isPublished: boolean; // опубликован или черновик
   publishedAt?: string; // дата публикации (если опубликован)
   tagId: string;        // id тега (связь с тегом)
+  authorId: string;     // id автора (связь с пользователем)
   createdAt: string;    // дата создания
   updatedAt: string;    // дата обновления
 }

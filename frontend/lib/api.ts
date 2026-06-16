@@ -1,7 +1,7 @@
 import { Tag, Post, PostWithTag, TagWithPosts, ApiResponse } from '@/types';
 
 // Адрес бека
-const API_BASE = 'http://localhost:4000/api';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE!;
 
 // Универсальный запрос с токеном
 async function request<T>(url: string, options?: RequestInit): Promise<T> {

@@ -6,7 +6,7 @@
     "dev": "nodemon src/index.ts",
     "build": "node ./node_modules/typescript/bin/tsc",
     "start": "node dist/index.js",
-    "postinstall": "prisma generate && chmod +x node_modules/.bin/tsc",
+    "postinstall": "prisma generate && npx tsc src/seed.ts --outDir dist --module commonjs --target es2020",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "prisma db seed",
     "railway:setup": "npm run db:migrate && npm run db:seed"
@@ -33,6 +33,6 @@
     "typescript": "^5.3.3"
   },
   "prisma": {
-    "seed": "node dist/prisma/seed.js"
+    "seed": "node dist/seed.js"
   }
 }

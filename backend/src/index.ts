@@ -9,8 +9,9 @@ const PORT = process.env.PORT || 4000;
 
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://webdev-blog.vercel.app',
-  'https://webdev-blog-2z6k.vercel.app'
+  'https://web-dev-blog-mrmkuxy21-nikitabelkin0001-blips-projects.vercel.app',
+  'https://web-dev-blog-nine.vercel.app',
+  'https://web-dev-blog.vercel.app'
 ];
 
 app.use(cors({

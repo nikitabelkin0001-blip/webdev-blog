@@ -87,7 +87,6 @@ router.post('/', authenticate, async (req: AuthRequest, res) => {
         title,
         content,
         isPublished,
-        publishedAt: isPublished ? new Date() : null,
         tagId,
         authorId: req.userId!
       }
@@ -132,9 +131,7 @@ if (existingPost.authorId !== req.userId && !isAdmin) {
         title: title !== undefined ? title : existingPost.title,
         content: content !== undefined ? content : existingPost.content,
         isPublished: isPublished !== undefined ? isPublished : existingPost.isPublished,
-        publishedAt: isPublished === true && !existingPost.publishedAt ? new Date() : existingPost.publishedAt,
         tagId: tagId !== undefined ? tagId : existingPost.tagId,
-        updatedAt: new Date()
       }
     });
     

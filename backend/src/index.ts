@@ -9,13 +9,9 @@ const PORT = process.env.PORT || 4000;
 
 app.use(cors({
   origin: function (origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'https://web-dev-blog-mrmkuxy21-nikitabelkin0001-blips-projects.vercel.app',
-      'https://web-dev-blog-nine.vercel.app',
-      'https://web-dev-blog-2mn4a8m9x-nikitabelkin0001-blips-projects.vercel.app'
-    ];
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin ||
+      origin.includes('vercel.app') ||
+      origin.includes('localhost')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -31,7 +27,7 @@ app.use('/api/posts', postsRouter);
 app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
-  res.json({ 
+  res.json({
     message: 'Backend is running!',
     status: 'ok',
     endpoints: ['/api/tags', '/api/posts', '/api/auth']

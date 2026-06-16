@@ -10,6 +10,7 @@ export interface Tag {
     name: string;
     email: string;
   }
+}
 
 export interface Post {
   id: string;           // уникальный идентификатор

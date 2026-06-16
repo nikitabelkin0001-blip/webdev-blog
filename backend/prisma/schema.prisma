@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -11,23 +11,23 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   password  String
-  name      String
+  name      String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
+
   posts     Post[]
   tags      Tag[]
 }
 
 model Tag {
   id          String   @id @default(cuid())
-  name        String   @unique
+  name        String
   slug        String   @unique
   description String?
   createdAt   DateTime @default(now())
-  authorId    String?
-  author      User?     @relation(fields: [authorId], references: [id], onDelete:SetNull)
-  
+
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
   posts       Post[]
 }
 
@@ -36,13 +36,12 @@ model Post {
   title       String
   content     String
   isPublished Boolean  @default(false)
-  publishedAt DateTime?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   authorId    String
-  author      User     @relation(fields: [authorId], references: [id])
-  
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
   tagId       String
-  tag         Tag      @relation(fields: [tagId], references: [id])
+  tag         Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
 }
